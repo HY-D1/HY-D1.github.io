@@ -52,6 +52,24 @@ education and project evidence. No remote fonts, UI libraries, or decorative
 animations are required. Short entrance transitions and spring-like interaction
 feedback are implemented in CSS and disabled for reduced-motion preferences.
 
+The owner-reviewed hero adds a plain "Open to work" line near the contact
+action; it makes no claim about role, start date, or work authorization. A static,
+decorative hero backdrop uses three photographs from the six not selected for
+the main gallery on that page load. The existing shuffle drives both selections,
+so every refresh selects again without overlap between the gallery trio and
+backdrop trio. Random choices can repeat. The backdrop uses CSS grayscale with
+an owner-requested transparency mask: approximately 9% effective opacity in the
+left text area, rising smoothly to 44% at the far right. Desktop introduction
+copy stays inside this quiet area even with enlarged text. Photographs fade at their
+joining edges instead of forming hard seams. At widths up to 900px the backdrop
+stays at 10% opacity because text wraps across more of the available width.
+Browsers without standard mask support use a low-opacity fallback.
+This is a static opacity treatment, not a colored decorative gradient or an
+animation. Original assets and gallery colors remain unchanged. It is hidden
+from assistive technology, cannot intercept clicks, and is omitted in print.
+Without JavaScript the hero keeps its plain surface and all content remains.
+The owner approved this treatment in the local preview before PR submission.
+
 ## Project and experience content
 
 Projects are selected by relevance, not chronology. Each entry has one short

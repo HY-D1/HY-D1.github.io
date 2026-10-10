@@ -23,7 +23,20 @@ if (selectedPhotos && morePhotos) {
   ];
   if (photographs.length >= 3) {
     const shuffled = shufflePhotos(photographs);
+    const remaining = shuffled.slice(3);
     selectedPhotos.replaceChildren(...shuffled.slice(0, 3));
-    morePhotos.replaceChildren(...shuffled.slice(3));
+    morePhotos.replaceChildren(...remaining);
+
+    const heroPhotographs = document.querySelector("#hero-photographs");
+    if (heroPhotographs) {
+      const layers = remaining.slice(0, 3).map((figure) => {
+        const source = figure.querySelector("img")?.getAttribute("src");
+        if (!source) return null;
+        const layer = document.createElement("span");
+        layer.style.backgroundImage = `url("${source}")`;
+        return layer;
+      }).filter(Boolean);
+      heroPhotographs.replaceChildren(...layers);
+    }
   }
 }

@@ -408,3 +408,98 @@ gh repo view HY-D1/vad-distillation --json isFork,visibility,url
   PR #3 and decides whether to merge. Deployment must be confirmed separately
   after a merge; project services/model benchmarks and full accessibility audit
   remain unverified as documented above.
+
+## 2026-10-09 21:42 PDT — Local availability and randomized hero photo trial
+
+- Status: PARTIAL pending owner visual approval; local automated checks PASS.
+  No commit, push, PR update, merge, or deployment for this experiment.
+- Baseline: clean worktree at `c5a84dd`; 13/13 existing tests passed. Added
+  availability/backdrop regressions first failed (13 pass, 2 expected failures).
+  Updating the requested opacity profile also failed before implementation
+  (14 pass, 1 expected failure). Final `node --test tests/site.test.mjs`:
+  15 passed, zero failed. `node --check script.js` and `git diff --check` pass.
+- Changed files: `index.html`, `styles.css`, `script.js`, `tests/site.test.mjs`,
+  `README.md`, and this checkpoint. Added plain English "Open to work" without
+  inventing availability dates, job types, or work authorization. Each refresh
+  shuffles the nine existing photos; the gallery retains three and the backdrop
+  uses three from the remaining six. No new assets or dependencies.
+- Owner explicitly requested stronger photography toward the right, overriding
+  the default prohibition on gradient treatments only for a static transparency
+  mask. Latest strength is 44% at the far right, approximately 8.8% in the left
+  text area. Join edges fade; grayscale is CSS-only. Desktop intro width remains
+  inside the quiet area; at widths up to 900px photos remain at 10% opacity.
+  Mask-unsupported browsers have a low-opacity fallback. Print hides photos
+  and retains the original unrestricted intro width.
+- Browser verification using Playwright session `hanyu-backdrop-review` and
+  `/Users/harrydai/.codex/skills/playwright/scripts/playwright_cli.sh`:
+  `open http://127.0.0.1:4173/`, `resize`, scoped `run-code`, and `screenshot`.
+  Six reload samples retained nine unique gallery photos, exactly three backdrop
+  photos, no intersection with the selected trio, and subset-of-remaining true.
+  All nine photo URLs returned HTTP 200. Tested 320, 390, 768, 1024, and 1280px
+  with 100% and 200% root font sizing: no horizontal overflow. Enlarged desktop
+  introduction stays left of 64% viewport width after the width guard.
+- Reduced motion produces animation `none` and scrolling `auto`; print backdrop
+  display is `none`. JavaScript-disabled check retains Open to work, gallery
+  3 + 6, and a plain hero. Decorative background is aria-hidden and pointer inert.
+  Conservative settled-text contrast calculation for #606060 over the darkest
+  possible left background is 4.946:1 (8.8% black over #fafafa), or 4.809:1
+  for the mobile 10% limit. This is not a complete WCAG or screen-reader audit.
+- Inspected final desktop and mobile screenshots outside the repository:
+  `/tmp/hanyu-portfolio-backdrop-desktop-final.png` and
+  `/tmp/hanyu-portfolio-backdrop-mobile-final.png`. Waited for existing entrance
+  animations to settle before the final capture. No private source documents
+  or originals were copied into the served directory.
+- Verification corrections: one earlier shell check mistakenly used the browser
+  log directory, causing missing test/script and non-repository errors; reran
+  all checks in the worktree successfully. An initial browser sampling selector
+  used `#selected-photos`, which does not exist; corrected to `#personal-photos`
+  and reran before claiming disjointness. Neither error changed project files.
+- Remaining: owner local review, browser engines other than Chromium, field
+  performance, and comprehensive assistive-technology checks. Random sets may
+  repeat legitimately. Preview remains at `http://127.0.0.1:4173/`.
+  Next smallest action: owner approves or requests another bounded visual tweak
+  before any PR update. Suggested commit after approval:
+  `feat: add availability and randomized monochrome hero photographs`.
+
+## 2026-10-09 21:44 PDT — Approved hero treatment: prepare separate PR
+
+- Status: PARTIAL for delivery; owner approved the latest local preview and
+  explicitly requested a PR. The local review gate is satisfied.
+- `git fetch origin` and `gh pr view 3 --repo HY-D1/HY-D1.github.io --json number,url,title,body,state,isDraft,mergeable,mergeStateStatus,headRefOid,headRefName,baseRefName,statusCheckRollup`
+  confirmed PR #3 is MERGED. `origin/main` is `726a898`; its file tree matches
+  the original local HEAD `c5a84dd` (`git diff --stat HEAD origin/main` empty).
+  No open PR was found with `gh pr list --repo HY-D1/HY-D1.github.io --state open --json number,title,headRefName`.
+- Created `feat/availability-photo-backdrop` from current `origin/main` using
+  `git switch -c feat/availability-photo-backdrop origin/main`, retaining exactly
+  the six locally reviewed modified files. Previous merged PR is unchanged.
+- Fresh checks in the worktree: `node --test tests/site.test.mjs` reports
+  15 passed, zero failed; `node --check script.js` and `git diff --check` PASS.
+  Reviewed the six-file diff: no new images, dependencies, credentials, private
+  documents, employment claims, unrelated content edits, or deployment changes.
+  Prior browser evidence remains applicable because approved UI is unchanged.
+- README now records owner approval instead of the superseded local-only gate.
+  Expected delivery: commit these six files, push the new branch, open an
+  English PR against main, attach it to this chat, and verify its remote head.
+  No merge/deployment or worktree removal is authorized.
+
+## 2026-10-09 21:45 PDT — Approved hero treatment PR delivered
+
+- Status: PASS for branch/PR delivery. The approved six-file change is committed
+  as `10b8ff812abea1bd4939117e004884efaeb533da` on
+  `feat/availability-photo-backdrop`; `git push -u origin feat/availability-photo-backdrop`
+  succeeded. `git ls-remote --heads origin feat/availability-photo-backdrop`
+  confirmed the matching remote implementation commit.
+- GitHub connection created PR #4:
+  https://github.com/HY-D1/HY-D1.github.io/pull/4
+  Title: Add availability and randomized monochrome hero photography.
+  Attached it to this chat. Base is main at `726a898`; state OPEN, draft false.
+  `gh pr view 4 --repo HY-D1/HY-D1.github.io --json number,url,state,isDraft,mergeable,mergeStateStatus,headRefOid,headRefName,baseRefName,statusCheckRollup,files`
+  confirmed MERGEABLE / CLEAN and only the intended six files.
+- Local checks remain 15/15 tests, script syntax, and whitespace PASS. UI is
+  unchanged since owner approval. `statusCheckRollup` is empty: no hosted CI
+  pass is claimed. No merge, deployment, visibility change, or worktree removal.
+- This entry is a documentation-only delivery checkpoint, committed and pushed
+  separately. Retain the local preview. Next action: owner reviews PR #4 and
+  chooses whether to merge; confirm Pages deployment separately after merging.
+  Other browser engines, full accessibility audit, and field performance remain
+  unverified as recorded above.

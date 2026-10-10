@@ -79,7 +79,7 @@ test("Private resume and transcript material is not exposed by the website", () 
   assert.match(html, /href="mailto:dai.hany@northeastern.edu"/);
 });
 
-test("Palette remains monochrome without gradients or looping effects", () => {
+test("Palette remains monochrome without decorative gradients or looping effects", () => {
   for (const source of [html, css, read("favicon.svg"), read("404.html")]) {
     for (const match of source.matchAll(/#([0-9a-f]{6})\b/gi)) {
       const hex = match[1];
@@ -87,7 +87,8 @@ test("Palette remains monochrome without gradients or looping effects", () => {
       assert.equal(hex.slice(2, 4), hex.slice(4, 6), "Non-neutral color: " + hex);
     }
   }
-  assert.doesNotMatch(css, /gradient\(|\binfinite\b|scroll-timeline/);
+  const nonMaskStyles = css.replace(/(?:-webkit-)?mask-image:\s*linear-gradient\([^;]+;/g, "");
+  assert.doesNotMatch(nonMaskStyles, /gradient\(|\binfinite\b|scroll-timeline/);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
   assert.match(css, /animation:\s*none !important/);
   assert.match(css, /:focus-visible/);
@@ -114,6 +115,20 @@ test("Hero omits the redundant portfolio and location line while contact retains
   assert.doesNotMatch(hero, /Personal portfolio|Vancouver, BC|class="eyebrow"/);
   assert.match(hero, /<h1 id="hero-title">/);
   assert.match(html, /<p class="contact-location">Based in Vancouver, BC\.<\/p>/);
+});
+
+test("Availability and decorative backdrop preserve a readable, static hero", () => {
+  const hero = html.match(/<section[^>]*class="hero"[\s\S]*?<\/section>/)?.[0] || "";
+  assert.match(hero, /<p class="availability"><span aria-hidden="true"><\/span>Open to work<\/p>/);
+  assert.match(hero, /id="hero-photographs" aria-hidden="true"/);
+  assert.match(css, /\.hero-photographs[^}]*pointer-events:\s*none/);
+  assert.match(css, /\.hero-photographs[^}]*opacity:\s*0\.44\s*;/);
+  assert.match(css, /mask-image:\s*linear-gradient\(to right, rgba\(0, 0, 0, 0\.20\) 72%, #000\)/);
+  assert.match(css, /@media \(max-width: 56\.25rem\)\s*\{\s*\.hero-photographs \{ opacity: 0\.10; -webkit-mask-image: none; mask-image: none; \}/);
+  assert.match(css, /\.hero-details \{ max-width: 65%;/);
+  assert.match(css, /\.hero-details \{ max-width: none; \}/);
+  assert.match(css, /@supports not \(mask-image: none\)\s*\{\s*\.hero-photographs \{ opacity: 0\.10; \}/);
+  assert.match(css, /filter:\s*grayscale\(1\)/);
 });
 
 test("Personal photography uses all nine supplied assets accessibly", () => {
@@ -144,8 +159,11 @@ test("Personal photography uses all nine supplied assets accessibly", () => {
   assert.match(css, /object-fit:\s*contain/);
 });
 
-const runPhotoScript = (random, withGallery = true) => {
-  const photographs = Array.from({ length: 9 }, (_, index) => ({ id: index }));
+const runPhotoScript = (random, withGallery = true, withBackdrop = false) => {
+  const photographs = Array.from({ length: 9 }, (_, index) => ({
+    id: index,
+    querySelector: () => ({ getAttribute: () => "/assets/photos/test-" + index + ".webp" }),
+  }));
   const gallery = (items) => ({
     items,
     querySelectorAll: () => items,
@@ -153,10 +171,13 @@ const runPhotoScript = (random, withGallery = true) => {
   });
   const selected = gallery(photographs.slice(0, 3));
   const more = gallery(photographs.slice(3));
+  const backdrop = gallery([]);
   const context = createContext({
     Math: Object.assign(Object.create(Math), { random }),
     document: {
+      createElement: () => ({ style: {} }),
       querySelector(selector) {
+        if (selector === "#hero-photographs") return withBackdrop ? backdrop : null;
         if (!withGallery) return null;
         return selector === "#personal-photos" ? selected
           : selector === "#more-photos" ? more : null;
@@ -164,8 +185,21 @@ const runPhotoScript = (random, withGallery = true) => {
     },
   });
   runInContext(read("script.js"), context);
-  return { context, selected, more };
+  return { context, selected, more, backdrop };
 };
+
+test("Backdrop selects three distinct remaining photos without changing the gallery", () => {
+  for (const value of [0, 0.5, 0.999999]) {
+    const { selected, more, backdrop } = runPhotoScript(() => value, true, true);
+    const expected = more.items.slice(0, 3).map((photo) => 'url("/assets/photos/test-' + photo.id + '.webp")');
+    assert.deepEqual(backdrop.items.map((layer) => layer.style.backgroundImage), expected);
+    assert.equal(new Set(expected).size, 3);
+    for (const photo of selected.items) assert.ok(!expected.includes('url("/assets/photos/test-' + photo.id + '.webp")'));
+    assert.equal(selected.items.length, 3);
+    assert.equal(more.items.length, 6);
+  }
+  assert.equal(runPhotoScript(() => 0, false, true).backdrop.items.length, 0);
+});
 
 test("Random selection retains exactly three unique photos and all six others", () => {
   for (const value of [0, 0.5, 0.999999]) {
