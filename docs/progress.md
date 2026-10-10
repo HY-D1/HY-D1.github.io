@@ -386,3 +386,25 @@ gh repo view HY-D1/vad-distillation --json isFork,visibility,url
 - Next action: commit approved changes, push `feat/monochrome-portfolio`, open
   an English PR against `main`, and record the confirmed PR URL. Retain the
   worktree and local preview. Public deployment remains unverified.
+
+## 2026-10-09 21:31 PDT — PR created after local review pass
+
+- Status: PASS for the requested branch/PR delivery. Owner's approved UI is
+  committed and pushed as `d514d25a6a39a49a33200eb1f1fc00671e5539e4` on
+  `feat/monochrome-portfolio`. All 23 approved files are included.
+- Confirmed PR: https://github.com/HY-D1/HY-D1.github.io/pull/3
+  Title: Refine monochrome portfolio with projects, experience, and personal photography.
+  Base: `main`; state: OPEN; draft: false. GitHub reports MERGEABLE / CLEAN.
+  Attached the PR to this chat. No merge, deployment, or visibility change.
+- Successful delivery commands: `git commit -m "feat: refine monochrome portfolio with verified content and photography"`,
+  `git push -u origin feat/monochrome-portfolio`; GitHub connection created PR #3.
+  `gh pr view 3 --repo HY-D1/HY-D1.github.io --json number,url,state,isDraft,mergeable,mergeStateStatus,headRefOid,baseRefName,headRefName,statusCheckRollup`
+  confirmed the PR identity, branch, and clean mergeability. Working tree was
+  clean before this documentation-only delivery checkpoint.
+- Local verification remains 13/13 tests, script syntax, and whitespace PASS.
+  No PR status checks are configured/running (`statusCheckRollup` empty); do not
+  label this as a successful hosted CI run. Pages workflow runs on main only.
+- Retained the worktree and local preview for review. Next step: owner reviews
+  PR #3 and decides whether to merge. Deployment must be confirmed separately
+  after a merge; project services/model benchmarks and full accessibility audit
+  remain unverified as documented above.
