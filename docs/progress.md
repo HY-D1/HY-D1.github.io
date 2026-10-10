@@ -481,3 +481,25 @@ gh repo view HY-D1/vad-distillation --json isFork,visibility,url
   Expected delivery: commit these six files, push the new branch, open an
   English PR against main, attach it to this chat, and verify its remote head.
   No merge/deployment or worktree removal is authorized.
+
+## 2026-10-09 21:45 PDT — Approved hero treatment PR delivered
+
+- Status: PASS for branch/PR delivery. The approved six-file change is committed
+  as `10b8ff812abea1bd4939117e004884efaeb533da` on
+  `feat/availability-photo-backdrop`; `git push -u origin feat/availability-photo-backdrop`
+  succeeded. `git ls-remote --heads origin feat/availability-photo-backdrop`
+  confirmed the matching remote implementation commit.
+- GitHub connection created PR #4:
+  https://github.com/HY-D1/HY-D1.github.io/pull/4
+  Title: Add availability and randomized monochrome hero photography.
+  Attached it to this chat. Base is main at `726a898`; state OPEN, draft false.
+  `gh pr view 4 --repo HY-D1/HY-D1.github.io --json number,url,state,isDraft,mergeable,mergeStateStatus,headRefOid,headRefName,baseRefName,statusCheckRollup,files`
+  confirmed MERGEABLE / CLEAN and only the intended six files.
+- Local checks remain 15/15 tests, script syntax, and whitespace PASS. UI is
+  unchanged since owner approval. `statusCheckRollup` is empty: no hosted CI
+  pass is claimed. No merge, deployment, visibility change, or worktree removal.
+- This entry is a documentation-only delivery checkpoint, committed and pushed
+  separately. Retain the local preview. Next action: owner reviews PR #4 and
+  chooses whether to merge; confirm Pages deployment separately after merging.
+  Other browser engines, full accessibility audit, and field performance remain
+  unverified as recorded above.
