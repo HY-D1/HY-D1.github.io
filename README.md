@@ -14,7 +14,7 @@ projects, employers, credentials, or contact details.
 From the repository root, run:
 
 ```text
-python3 -m http.server 4173
+python3 -m http.server 4173 --bind 127.0.0.1
 ```
 
 Then open `http://localhost:4173` in a browser. Stop the server with `Ctrl+C`.
@@ -25,6 +25,20 @@ Then open `http://localhost:4173` in a browser. Stop the server with `Ctrl+C`.
 changes land on `main`, and can also be started manually from the Actions tab.
 The repository's Pages source should be set to **GitHub Actions** in
 **Settings → Pages** once the repository has its first site commit.
+
+If deployment fails at **Configure Pages** with **Not Found**, enable Pages and
+select **GitHub Actions** as the source, then rerun the failed workflow from the
+Actions tab. The expected published address is `https://hy-d1.github.io/`;
+confirm the deployment succeeds before using it as a live portfolio link.
+
+GitHub Free supports Pages for public repositories. A private repository requires
+a plan that supports private-repository Pages. See the
+[official publishing-source documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
+
+## Project language
+
+All project artifacts use English. See `AGENTS.md` for the language and content
+accuracy rules that apply to future updates.
 
 ## Structure
 
