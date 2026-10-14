@@ -115,8 +115,10 @@ its research workflow without turning those targets into accomplishments.
 ## Personal photographs and contact privacy
 
 The homepage displays three randomly selected owner-provided photographs in
-`#personal-photos` under "Beyond the screen". Six more are available in a native,
-keyboard-accessible `details` disclosure. Only supplied photographs are used;
+`#personal-photos` under "Beyond the screen". The "View photography portfolio"
+link opens `https://harryframes.pages.dev/` in a new tab with an accessible
+new-tab description. Six other figures remain in the hidden `#more-photos`
+selection pool, not in the visible page or keyboard tab order. Only supplied photographs are used;
 there are no stock or generated images. Sanitized web copies are stored under
 `assets/photos/`. For additions, use the existing `figure` structure.
 Use an `img` with accurate English alt text, actual intrinsic width and height,
@@ -127,10 +129,12 @@ portrait images are not cropped. Each photo links to its web-sized copy.
 
 On every page load, `script.js` shuffles the nine existing figures with
 Fisher–Yates, places three in the main row, and leaves the other six in the
-disclosure. There are no duplicates or omitted images, and no cookies, storage,
+hidden selection pool, also used for the randomized hero backdrop. There are no
+duplicates or omitted images in the pool, and no cookies, storage,
 or remote requests are needed for selection. A random selection may repeat
-across visits. Without JavaScript, the original three-plus-six arrangement stays
-usable. No image viewer or shuffle dependency is required.
+across visits. Without JavaScript, the original three thumbnails and external
+photography link remain usable; the six-photo pool stays hidden.
+No image viewer or shuffle dependency is required.
 Photo captions show titles only, with no series numbers or visible count.
 
 Keep originals outside this repository. Remove EXIF/GPS and other sensitive
@@ -176,10 +180,12 @@ For browser verification, start the local preview above. At widths of 320, 390,
 links remain readable. Repeat at 200% text size. Press Tab on a fresh page: the
 first focus target must be "Skip to content"; Enter must move focus to the main
 content. Test all six navigation links, the Get in touch action, and the return
-link on `/404.html`. Expand and collapse More photographs using both mouse and
-keyboard; confirm all nine images load without distortion. Reload several times
+link on `/404.html`. Activate View photography portfolio using both mouse and
+keyboard; confirm it opens Harry Frames in a new tab. Reload several times
 and check that three distinct images appear in the main row, with six distinct
-others in the disclosure. Repeated random selections are allowed. Check the
+others in the hidden pool, with three backgrounds drawn from that pool and no
+overlap with the visible trio. The pool must remain hidden with JavaScript both
+enabled and disabled. Repeated random selections are allowed. Check the
 email and both social-link destinations without sending a message.
 Check all seven project-source URLs; verify that experience runs from February
 2026 back to summer 2019, projects have no dates, and private records remain
