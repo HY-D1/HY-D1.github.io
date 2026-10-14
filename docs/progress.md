@@ -503,3 +503,71 @@ gh repo view HY-D1/vad-distillation --json isFork,visibility,url
   chooses whether to merge; confirm Pages deployment separately after merging.
   Other browser engines, full accessibility audit, and field performance remain
   unverified as recorded above.
+
+## 2026-10-14 16:45 PDT — Local Harry Frames photography link
+
+- Status: PARTIAL pending owner local review; implementation checks PASS.
+  Owner requested local-only application of the external photography link.
+  Baseline worktree was clean and `node --test tests/site.test.mjs` passed 15/15.
+- Changed `index.html`: replaced the More photographs disclosure with a
+  View photography portfolio link to https://harryframes.pages.dev/ opening
+  a new tab with noopener/noreferrer and accessible new-tab text. Retained
+  all six additional figures in hidden `#more-photos`; `script.js` unchanged.
+- Changed `styles.css`: explicit `.photo-gallery[hidden] { display: none; }`
+  prevents the existing grid rule from overriding hidden-pool behavior.
+  Existing gallery, hero, content, and metadata remain unchanged.
+- Changed `tests/site.test.mjs` to verify the requested external-link/hidden-pool
+  contract instead of the explicitly superseded disclosure. This test failed
+  against the old HTML before implementation. Final tests: 15 passed, zero
+  failed; `node --check script.js` and `git diff --check` PASS. Updated README
+  behavior and manual verification instructions; this is the only checkpoint.
+- Browser skill checks with session `harryframes-link-review`: open local
+  `/#photography`, snapshot, scoped run-code, click observed link ref, tab-list.
+  Actual click opened https://harryframes.pages.dev/ in a separate tab titled
+  Harry — Nature & People, leaving the portfolio tab open. Four reload samples
+  each retained 3 visible figures, 6 hidden figures (display none), 3 hero
+  backgrounds, and no overlap with the visible trio. No horizontal overflow at
+  320, 390, 768, or 1280px. JavaScript-disabled check retained 3 thumbnails,
+  the link, and a hidden pool. Inspected `/tmp/harryframes-local-link.png`.
+- Preview was not running (HTTP 000), so restarted in this worktree using
+  `python3 -m http.server 4173 --bind 127.0.0.1`; leave it running for owner.
+  Only agent-owned browser session is closed. No commit, push, PR update,
+  merge, deployment, dependency change, or photo asset changes.
+- Next: owner reviews http://127.0.0.1:4173/#photography before authorizing
+  PR delivery. Complete screen-reader testing and other engines unverified.
+  Suggested commit after approval: `feat: link personal photography to Harry Frames`.
+
+## 2026-10-14 — Owner-approved photography link: PR preparation
+
+- Status: PARTIAL for delivery; owner approved the local preview and explicitly
+  requested a PR. Prior local browser results remain applicable: UI unchanged.
+- `git fetch origin`, `gh pr view 4 --repo HY-D1/HY-D1.github.io --json state,headRefName`,
+  and `gh pr list --repo HY-D1/HY-D1.github.io --state open --json number,title,headRefName`
+  confirmed PR #4 is MERGED and no open PR exists. The latest main tree matches
+  the previous local HEAD (`git diff --stat HEAD origin/main` empty).
+- Created `feat/harryframes-photography-link` from origin/main, preserving the
+  five reviewed local changes. Reviewed diff contains only `index.html`,
+  `styles.css`, `tests/site.test.mjs`, `README.md`, and this checkpoint.
+  No new assets, runtime dependencies, source document exposure, deployment
+  configuration changes, or random-selection script changes.
+- Fresh `node --test tests/site.test.mjs`: 15 passed, zero failed;
+  `node --check script.js` and `git diff --check` PASS. Next: commit, push,
+  create an English PR, attach it, and confirm the remote head. Do not merge,
+  deploy, remove the worktree, or stop the owner preview.
+
+## 2026-10-14 16:47 PDT — Harry Frames link PR delivered
+
+- Status: PASS for requested PR delivery. Implementation commit:
+  `df2d8d5683bc3ebb190fa79ddd6c84445162e04b`, branch
+  `feat/harryframes-photography-link`, base main `39aa8fa`.
+  `git push -u origin feat/harryframes-photography-link` succeeded;
+  `git ls-remote --heads origin feat/harryframes-photography-link` matched.
+- GitHub connection created https://github.com/HY-D1/HY-D1.github.io/pull/5
+  with English title "Link personal photography to Harry Frames"; attached
+  it to this chat. PR is open and not draft; exactly five intended files.
+- Local tests remain 15/15 PASS; script syntax and whitespace PASS. UI and
+  script unchanged since owner-approved browser verification. No merge or
+  deployment performed; preview/worktree retained. This documentation-only
+  delivery entry is committed and pushed separately.
+- Next: owner reviews PR #5 and decides whether to merge. Production deployment,
+  other browser engines, and complete accessibility audit remain unverified.

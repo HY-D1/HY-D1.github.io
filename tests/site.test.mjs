@@ -144,14 +144,15 @@ test("Personal photography uses all nine supplied assets accessibly", () => {
     const source = tag.match(/src="\/([^"]+)"/)[1];
     assert.ok(read(source).length > 0, "Missing photo: " + source);
   }
-  assert.match(html, /<details class="more-photos">/);
-  assert.match(html, /id="more-photos"/);
+  assert.match(html, /<div class="photo-gallery" id="more-photos" hidden>/);
+  assert.match(css, /\.photo-gallery\[hidden\] \{ display: none; \}/);
   assert.match(html, /<figcaption>Salt lake<\/figcaption>/);
   assert.match(html, /<figcaption>Winter in Banff<\/figcaption>/);
   assert.match(html, /<figcaption>Meteors<\/figcaption>/);
   assert.match(html, /alt="Meteors crossing a star-filled sky above a wooded hillside and rooftops\."/);
   assert.doesNotMatch(html, /<figcaption>(Winter reflection|Night sky)<\/figcaption>/);
-  assert.match(html, /<summary>More photographs<\/summary>/);
+  assert.match(html, /<a class="text-link more-photos" href="https:\/\/harryframes\.pages\.dev\/" target="_blank" rel="noopener noreferrer">View photography portfolio/);
+  assert.doesNotMatch(html, /<details class="more-photos">|<summary>More photographs/);
   for (const caption of html.matchAll(/<figcaption>(.*?)<\/figcaption>/g)) {
     assert.doesNotMatch(caption[1], /<span>|\d/);
   }
