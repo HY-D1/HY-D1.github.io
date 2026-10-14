@@ -554,3 +554,20 @@ gh repo view HY-D1/vad-distillation --json isFork,visibility,url
   `node --check script.js` and `git diff --check` PASS. Next: commit, push,
   create an English PR, attach it, and confirm the remote head. Do not merge,
   deploy, remove the worktree, or stop the owner preview.
+
+## 2026-10-14 16:47 PDT — Harry Frames link PR delivered
+
+- Status: PASS for requested PR delivery. Implementation commit:
+  `df2d8d5683bc3ebb190fa79ddd6c84445162e04b`, branch
+  `feat/harryframes-photography-link`, base main `39aa8fa`.
+  `git push -u origin feat/harryframes-photography-link` succeeded;
+  `git ls-remote --heads origin feat/harryframes-photography-link` matched.
+- GitHub connection created https://github.com/HY-D1/HY-D1.github.io/pull/5
+  with English title "Link personal photography to Harry Frames"; attached
+  it to this chat. PR is open and not draft; exactly five intended files.
+- Local tests remain 15/15 PASS; script syntax and whitespace PASS. UI and
+  script unchanged since owner-approved browser verification. No merge or
+  deployment performed; preview/worktree retained. This documentation-only
+  delivery entry is committed and pushed separately.
+- Next: owner reviews PR #5 and decides whether to merge. Production deployment,
+  other browser engines, and complete accessibility audit remain unverified.
