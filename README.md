@@ -85,12 +85,16 @@ come from the master resume; the expected date is not a completed credential.
 Grades, student identifiers, birth details, phone numbers, and private document
 downloads are not published. Keep the original records outside the repository.
 
-The following public repositories and README files were checked on October 9,
-2026. Repository inspection supports the project scope, not production readiness
-or independently reproduced benchmark results.
+The existing seven public repositories and README files were checked on October 9,
+2026. Amazon Sales Analytics V2 was added after its local ingestion, SQL metrics,
+tests, and dashboard screenshots were verified on October 16, 2026. Its links
+target the review branch `portfolio-v2`; they do not imply that the changes have
+merged into main. Repository inspection supports project scope, not production
+readiness or independently reproduced benchmark results.
 
 | Project | Public source | Content boundary |
 | --- | --- | --- |
+| Amazon Sales Analytics V2 | [Review branch](https://github.com/HY-D1/amazon-sales-analytics/tree/portfolio-v2) | Independently generated synthetic retail data; validated ingestion, status-aware SQL metrics, dashboard, BI-ready star schema; Power BI Desktop authoring pending; no real Amazon performance or claimed business impact |
 | SQL-Adapt | [Repository](https://github.com/HY-D1/adaptive-instructional-artifacts) | Adaptive SQL feedback, learner progress, instructor dashboards; no claimed learning gains |
 | StudentBERT | [Repository](https://github.com/HY-D1/studentbert) | Learning-sequence preprocessing, pretraining, evaluation; no claimed state-of-the-art result |
 | Superstore Strategy Analysis | [Repository](https://github.com/HY-D1/Superstore-Strategy-Analysis) | Sample retail data, quality checks, backtests, segmentation, dashboards; not real client impact |
@@ -99,11 +103,20 @@ or independently reproduced benchmark results.
 | TinyDetector | [Repository](https://github.com/HY-D1/tiny-detector) | Text-classification prototype, class-imbalance handling, inference API, model checks; no guaranteed safety or accuracy |
 | Compact VAD Distillation | [Repository](https://github.com/HY-D1/vad-distillation) | Speech research prototype, distillation, speaker-independent evaluation, label provenance; no claimed superiority or reproduced performance numbers |
 
-The homepage intentionally selects seven projects rather than copying the entire
+The homepage intentionally selects eight projects rather than copying the entire
 resume. Additional projects, publication details, certificates, metrics, or live
 demos require their own supporting evidence before inclusion. Do not treat a
 repository creation date as a project's starting date or a planned feature as
 implemented. Retain internship and group-project qualifiers when updating copy.
+
+The Amazon entry includes the actual local dashboard capture copied unchanged
+from `amazon-sales-analytics/docs/screenshots/dashboard-overview.png` to
+`assets/projects/amazon-sales-v2.png` (1280 × 720 pixels). The image preserves its
+original colors and full composition, scales proportionally, and links to the
+full-size file. It is separate from the randomized personal-photo pool. The
+processing-trace and verification-record links describe the checked implementation;
+no hosted dashboard, completed Power BI Desktop report, or production result is
+advertised. The reviewed screenshot is evidence of a local synthetic-data run.
 
 The three additional projects were selected after reviewing public source code
 as well as their READMEs, and are also described in the owner-supplied resume.
@@ -187,7 +200,9 @@ others in the hidden pool, with three backgrounds drawn from that pool and no
 overlap with the visible trio. The pool must remain hidden with JavaScript both
 enabled and disabled. Repeated random selections are allowed. Check the
 email and both social-link destinations without sending a message.
-Check all seven project-source URLs; verify that experience runs from February
+Check all eight project-source URLs and the Amazon processing-trace and
+verification links. Open its dashboard screenshot and confirm that the full
+image is visible without cropping. Verify that experience runs from February
 2026 back to summer 2019, projects have no dates, and private records remain
 outside the served directory.
 With reduced motion enabled, animations, link transitions,
@@ -203,5 +218,6 @@ dependencies.
 - `404.html` — a lightweight fallback for invalid routes
 - `robots.txt` / `sitemap.xml` — crawl guidance for the canonical site URL
 - `assets/photos/` — metadata-free, responsive WebP copies of owner photographs
+- `assets/projects/` — actual local project screenshots, separate from personal photographs
 - `tests/site.test.mjs` — structural, content, asset, and metadata checks
 - `docs/progress.md` — the single shared implementation checkpoint

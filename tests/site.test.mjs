@@ -57,7 +57,7 @@ test("Experience follows the supplied reverse chronology without invented outcom
 test("Selected projects have real source links, no dates, and qualified contributions", () => {
   const section = html.match(/<section[^>]*id="work"[\s\S]*?<\/section>/)?.[0] || "";
   assert.match(section, /<ul class="project-list" aria-label="Selected projects">/);
-  assert.equal((section.match(/<li>/g) || []).length, 7);
+  assert.equal((section.match(/<li>/g) || []).length, 8);
   for (const repo of ["adaptive-instructional-artifacts", "studentbert", "Superstore-Strategy-Analysis", "audio-transcription-cs6620", "local-ai-helper", "tiny-detector", "vad-distillation"]) {
     assert.ok(section.includes('href="https://github.com/HY-D1/' + repo + '"'));
   }
@@ -69,9 +69,43 @@ test("Selected projects have real source links, no dates, and qualified contribu
   assert.match(section, /text-classification prototype/);
   assert.match(section, /research prototype/);
   assert.match(section, /label-provenance checks/);
-  assert.equal((section.match(/class="project-link"/g) || []).length, 7);
+  assert.equal((section.match(/class="project-link"/g) || []).length, 8);
   assert.doesNotMatch(section, /outperform|guaranteed|473 KB|0\.262|multimodal|multi-user/i);
   assert.doesNotMatch(section, /<time|datetime=|\d+%|production-grade|state-of-the-art|Project case studies will be added/);
+});
+
+test("Retail analytics leads with reviewable evidence and explicit implementation boundaries", () => {
+  const section = html.match(/<section[^>]*id="work"[\s\S]*?<\/section>/)?.[0] || "";
+  const firstProject = section.match(/<li>[\s\S]*?<\/li>/)?.[0] || "";
+  assert.match(firstProject, /Amazon Sales Analytics V2/);
+  assert.match(firstProject, /class="project-link" href="https:\/\/github.com\/HY-D1\/amazon-sales-analytics\/tree\/portfolio-v2"/);
+  assert.match(firstProject, /SQL, Python, SQLite, Streamlit/);
+  assert.match(firstProject, /validated ingestion/);
+  assert.match(firstProject, /status-aware SQL metrics/);
+  assert.match(firstProject, /BI-ready star schema/);
+  assert.match(firstProject, /Independent synthetic data, not Amazon operational data/);
+  assert.match(firstProject, /Power BI Desktop authoring pending/);
+  for (const document of ["PROCESSING_TRACE", "VERIFICATION"]) {
+    assert.ok(firstProject.includes('href="https://github.com/HY-D1/amazon-sales-analytics/blob/portfolio-v2/docs/' + document + '.md"'));
+  }
+  assert.doesNotMatch(firstProject, /\/blob\/main\/|\/tree\/main|live demo|increased|reduced by|improved by|\.pbix|Power BI Desktop report completed/i);
+});
+
+test("Retail dashboard screenshot is local, accessible, and preserves its actual dimensions", () => {
+  const figure = html.match(/<figure class="project-preview">[\s\S]*?<\/figure>/)?.[0] || "";
+  assert.match(figure, /href="\/assets\/projects\/amazon-sales-v2\.png"/);
+  const image = figure.match(/<img\b[^>]*>/)?.[0] || "";
+  assert.match(image, /src="\/assets\/projects\/amazon-sales-v2\.png"/);
+  assert.match(image, /alt="[^"]*synthetic retail data[^"]*"/);
+  const dimensions = image.match(/width="(\d+)" height="(\d+)"/);
+  assert.ok(dimensions, "Screenshot needs intrinsic dimensions");
+  assert.match(image, /loading="lazy" decoding="async"/);
+  const buffer = readFileSync(new URL("../assets/projects/amazon-sales-v2.png", import.meta.url));
+  assert.equal(buffer.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
+  assert.equal(buffer.readUInt32BE(16), Number(dimensions[1]));
+  assert.equal(buffer.readUInt32BE(20), Number(dimensions[2]));
+  assert.match(css, /\.project-preview img \{[^}]*width:\s*100%;[^}]*height:\s*auto;/);
+  assert.match(figure, /Actual dashboard capture from a local synthetic-data run/);
 });
 
 test("Private resume and transcript material is not exposed by the website", () => {
@@ -135,7 +169,8 @@ test("Personal photography uses all nine supplied assets accessibly", () => {
   assert.match(html, /id="photography"/);
   assert.match(html, /id="personal-photos"/);
   assert.match(html, /Photography, food, hiking, and road trips/);
-  const images = [...html.matchAll(/<img\b[^>]*>/g)];
+  const photography = html.match(/<section[^>]*id="photography"[\s\S]*?<\/section>/)?.[0] || "";
+  const images = [...photography.matchAll(/<img\b[^>]*>/g)];
   assert.equal(images.length, 9);
   for (const [tag] of images) {
     assert.match(tag, /alt="[^"]+"/);
@@ -153,7 +188,7 @@ test("Personal photography uses all nine supplied assets accessibly", () => {
   assert.doesNotMatch(html, /<figcaption>(Winter reflection|Night sky)<\/figcaption>/);
   assert.match(html, /<a class="text-link more-photos" href="https:\/\/harryframes\.pages\.dev\/" target="_blank" rel="noopener noreferrer">View photography portfolio/);
   assert.doesNotMatch(html, /<details class="more-photos">|<summary>More photographs/);
-  for (const caption of html.matchAll(/<figcaption>(.*?)<\/figcaption>/g)) {
+  for (const caption of photography.matchAll(/<figcaption>(.*?)<\/figcaption>/g)) {
     assert.doesNotMatch(caption[1], /<span>|\d/);
   }
   assert.match(css, /grid-template-columns:\s*repeat\(3, minmax\(0, 1fr\)\)/);
