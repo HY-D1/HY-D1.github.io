@@ -583,3 +583,9 @@ gh repo view HY-D1/vad-distillation --json isFork,visibility,url
 - Browser at `http://127.0.0.1:4178/#work`: eight projects, image loaded at natural 1280×720; viewport 1280/document width 1265, no horizontal overflow. Actual local-preview screenshot saved to `/tmp/hy-d1-portfolio-v2-review.jpg`. Only this viewport was checked for the new entry; a full mobile/accessibility audit is not claimed.
 - Owner directed all Git commits to use Hanyu Dai or HY-D1 and remove the incorrect inherited agent identity. Local Git author/committer use Hanyu Dai and the verified account-specific HY-D1 privacy email; both repositories and global defaults were corrected. See the source project's `docs/GIT_IDENTITY_AUDIT.md`.
 - Delivery scope: push isolated branch and open PR. No merge, Pages deployment, profile-fact change, visibility change or deployment-setting change. Live site remains unchanged until normal PR review/merge.
+
+### Branch and PR delivered
+
+- Implementation commit `8d4f794` pushed to `portfolio-v2`; website PR https://github.com/HY-D1/HY-D1.github.io/pull/6 is open for review. All changed files belong to the bounded project entry and its evidence/verification updates.
+- Git author/committer are Hanyu Dai with the verified HY-D1 privacy email. Analytics delivery and identity audit are retained in its PR #1 and `FINAL_SUMMARY.md`.
+- Local checks remain 17/17 PASS. Existing Pages workflow runs on main, not this PR; no hosted website test/deployment success is claimed. Live https://hy-d1.github.io/ still shows the prior main version. No merge or public deployment performed.
